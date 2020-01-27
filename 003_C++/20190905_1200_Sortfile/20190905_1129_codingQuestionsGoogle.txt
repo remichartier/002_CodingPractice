@@ -1,0 +1,32 @@
+unix : cat file.txt |sort > sorted.txt
+
+
+#include <ifstream>
+
+Int sortLines(string fileName){
+	
+	Ifstream file(fileName);
+	
+vector<string> buffer = new vector<string>;
+Int line(0);
+Int nbLines(0);
+
+while (file.peek() != EOF){
+getline(fileName, buffer);
+// add a new element to the buffer table
+
+++line;
+}
+
+nbLines = line;
+
+// file is inside the buffer array.
+sortFile(buffer);
+	
+	// write to output file
+	Ifstream outputfile(“sortFile.txt”,writemode);
+	Line =0;
+while(line<nbLines) {
+	writefile(outputfile,buffer[Line]);
+}
+}
