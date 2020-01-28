@@ -719,6 +719,9 @@ void testPalindrome(){
 	// meaning it is a palindrome.
 
 	cout << "This IS a palindrome" << endl ;
+
+	// now according to book : 
+	// #29 : assume you have the length of the linked list : can you implement this recursively ?
 }
 
 int main(){
