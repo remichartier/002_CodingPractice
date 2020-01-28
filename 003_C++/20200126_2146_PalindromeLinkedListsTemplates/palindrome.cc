@@ -17,16 +17,6 @@
 	- Then start comparing characters while skipping spaces to check if palindrome or not.
 */
 
-
-
-/* 
-- define Node class
-- define linked list class
-- define method deleteNode
-- define method appendToTail
-- define method removeDuplicates
-*/
-
 #include <string>
 #include <iostream>
 #include <set>
@@ -115,6 +105,7 @@ template <class dataType> class LinkedList {
 		}
 
 		// removeDuplicates()
+		
 		void removeDuplicates01(){
 			/*
 				1. if temporary buffer is allowed --> can use a hash table. However, bit complicated in C++ to implement ...
@@ -133,7 +124,7 @@ template <class dataType> class LinkedList {
 			if value already in set --> remove node.
 			*/
 			set<dataType> memorySet ;
-			pair<set<dataType>::iterator,bool> ret;
+			pair<set<int>::iterator,bool> ret;
 			if(head != NULL){
 				Node<dataType> * p = head;
 				Node<dataType> * previous = NULL;
@@ -347,10 +338,10 @@ template <class dataType> class LinkedList {
 
 	Node<dataType> * addNodeTop(dataType value){
 		//cout << "entered method addNodeTop(value)" << endl ;		
-		if ( head == nullptr ){
+		//if ( head == nullptr ){
 			//cout << "return nullptr from method padNodestop(value)" << endl ;		
-			return nullptr ;
-		}
+		//	return nullptr ;
+		//}
 		Node<dataType> * n = new Node<dataType>(value);
 		n->next = head ;
 		head = n ;
@@ -384,24 +375,26 @@ template <class dataType> class LinkedList {
 	}
 };
 
-#if 0
 
-template <dataType> void testAddNodeTail(dataType value, LinkedList<dataType>& lst){
+
+template <class dataType> void testAddNodeTail(dataType value, LinkedList<dataType>& lst){
 	cout << "lst.appendToTail(" << value << ") ;" << endl ;
 	lst.appendToTail(value) ;
 	lst.printLinkedList() ;
 }
 
 
-template <dataType> void buildTopList(LinkedList<dataType>& newList){
-	Node<dataType> * n = new Node(3) ;
+template <class dataType> void buildTopList(LinkedList<dataType>& newList){
+	Node<dataType> * n = new Node<dataType>(3) ;
 	
-	newList = LinkedList(n);
+	newList = LinkedList<dataType>(n);
 	//newList.printLinkedList() ;
 	newList.appendToTail(5) ;
 }
 
-template <dataType> void buildBottomList(LinkedList<dataType>& newList){
+
+
+template <class dataType> void buildBottomList(LinkedList<dataType>& newList){
 	if(newList.head == nullptr){
 		return;
 	}
@@ -413,26 +406,27 @@ template <dataType> void buildBottomList(LinkedList<dataType>& newList){
 }
 
 
-template <dataType> void buildList(LinkedList<dataType>& newList){
+template <class dataType> void buildList(LinkedList<dataType>& newList){
 	buildTopList(newList);
 	buildBottomList(newList);	
 }
 
-template <dataType> void testRemoveNodes(LinkedList<dataType>& lst,int value){
+template <class dataType> void testRemoveNodes(LinkedList<dataType>& lst,dataType value){
 	
 	cout << "lst.deleteNode(1) ;" << "\n" ;
 	lst.deleteNode(value) ;
 	lst.printLinkedList() ;
 }
 
-template <dataType> void testRemoveDuplicates(LinkedList<dataType>& lst){
+
+template <class dataType> void testRemoveDuplicates(LinkedList<dataType>& lst){
 	
 	cout << "l.removeDuplicates() ;" << "\n" ;
 	lst.removeDuplicates02();
 	lst.printLinkedList() ;
 }
 
-template <dataType> void testKthToLastBuffer(LinkedList<dataType> lst){
+template <class dataType> void testKthToLastBuffer(LinkedList<dataType> lst){
 	Node<dataType> * k ;
 	int number(3);
 	k = lst.kthToLastBuffer(number);
@@ -464,7 +458,8 @@ template <dataType> void testKthToLastBuffer(LinkedList<dataType> lst){
 	}
 }
 
-template <dataType> void testDeleteMiddleNode(LinkedList<dataType> &lst){
+
+template <class dataType> void testDeleteMiddleNode(LinkedList<dataType> &lst){
 	Node<dataType> * n(nullptr) ;
 
 	buildTopList(lst);
@@ -646,26 +641,86 @@ void testSumListForwardOrder(){
 
 }
 
-#endif
+
 
 void testPalindrome(){
 	LinkedList<char> l1 = LinkedList<char>(nullptr);
+	LinkedList<char> l2 = LinkedList<char>(nullptr);
+	int nbChar(0),middle(0);
 
-	// exemples of palindrome : Tact Coa, Taco cat, atco cta
+	// exemples of palindrome : Taco cat, atco cta
+	// not a palindrome : Tact Coa
 	
 	// Build l1 
-	l1.appendToTail('t');
 	l1.appendToTail('a');
-	l1.appendToTail('c');
 	l1.appendToTail('t');
-	l1.appendToTail(' ');
 	l1.appendToTail('c');
 	l1.appendToTail('o');
+	l1.appendToTail(' ');
+	l1.appendToTail('c');
+	l1.appendToTail('t');
 	l1.appendToTail('a');
 	
 	l1.printLinkedList();
 	
+	/* reflexion on algorithm :
+
+		- Scroll Linked List and construct new one adding new node read on head of the new linked list.
+		- Count # of Characters.
+		- Then start comparing characters while skipping spaces to check if palindrome or not.
+	*/
+
+	// - Scroll Linked List and construct new one adding new node read on head of the new linked list.
+	// - Count # of Characters.
+		
+	Node<char> * p1(l1.head) ;
+	Node<char> * p2(nullptr) ;
+
+	while( p1 != nullptr){
+		// count character if not a space
+		if( p1->data != ' '){
+			++nbChar ;
+			l2.head = l2.addNodeTop(p1->data) ;
+			//cout << "l2 = " ;
+			//l2.printLinkedList();
+		}
+		p1 = p1->next ;
+	}
+
+	//cout << "After reading l1, nbChar = " << nbChar << endl ;
+	cout << "l2 = " ;
+	l2.printLinkedList();
+
+	// calculate middle : 
+	if( nbChar%2 == 0){
+		middle = nbChar / 2 ;
+	}
+	else{
+		middle = (int)(nbChar / 2) + 1 ;
+	}
+
+	int i(0);
+	p1 = l1.head ;
+	p2 = l2.head ;
+	while( i < middle ){
+		// scroll both Linked list.
+		// skip spaces (only in l1/p1)
+		while(p1->data == ' '){ p1 = p1->next ;}
+		if (p1->data != p2->data){
+			cout << p1->data << " != " << p2->data << " ---> This is NOT a palindrome" << endl ;
+			return ;
+		}
+		p1 = p1->next ;
+		p2 = p2->next ;
+		++i ;
+	}
+
+	// if out of while, means all chars until middle are identical
+	// meaning it is a palindrome.
+
+	cout << "This IS a palindrome" << endl ;
 }
+
 int main(){
 	//create linkedList with nodes, then print the nodes
 	//LinkedList l = LinkedList(nullptr);
@@ -678,6 +733,7 @@ int main(){
 	//testPartitionList(l,5);	
 	//testSumList();
 	//testSumListForwardOrder();
+	testPalindrome() ;
 	return 0;
 }
 /* g++ sortFile.cpp -o sortFile
