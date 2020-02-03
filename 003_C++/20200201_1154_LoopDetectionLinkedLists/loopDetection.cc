@@ -1,32 +1,19 @@
 /* Description :
 	
-	Given 2 singly linked lists, determine if the 2 lists intersect.
-	return the intersecting node.
-
-	Intersection is defined based on reference, not value.
-
-	If the kth node of the first linked list is the exact same 
-	node by reference as the jth node of the second linked list, 
-	then they are intersecting.
+	Given a circular linked list, implement an algorthm that returns the node at the beginning of 
+	the loop.
+	Definition : Circular linked list : a corrupt linked list in which a nodeś next pointer 
+	points to an earlier node, so as to make a loop in the linked list.
 	
-	Hints :  #20, #45, #65, #76, #93, 111, 120, 129
+	Example : 
+	Input : 	A / B / C / D / E / C (same C as earlier)
+	Output : 	C
 
-	Idea that onces one node is intersecting between the 2 lists, rest of the nodes are the same.
-	--> if 2 lists have same size, compare nodes by nodes, and if at some point of time one node 
-	is equal between the 2 lists --> intersecting lists.
-
-	--> if 2 lists are different length, only start comparing at node where rest of list starts
-	to have the same length.
-
-	--> need a method to compute linked list length
-
-	--> then scroll extra nodes before comparing them.
-
+	Hints :  #50, #69, #83, #90
 	
 */
 
 /* reflexion on algorithm :
-
 	- use a set to record references of 1st linked list.
 	- Then take 2nd linked list and check if each node appear int the set,
 	- if appears, return this reference.
@@ -931,6 +918,121 @@ void testIntersection02(){ // not yet compiled ...
 	}
 }
 
+/* Description :
+	
+	Given a circular linked list, implement an algorthm that returns the node at the beginning of 
+	the loop.
+	Definition : Circular linked list : a corrupt linked list in which a nodeś next pointer 
+	points to an earlier node, so as to make a loop in the linked list.
+	
+	Example : 
+	Input : 	A / B / C / D / E / C (same C as earlier)
+	Output : 	C
+
+	Hints :  #50, #69, #83, #90
+	
+*/
+
+void buildCircularLinkedList(LinkedList<char> & l1){
+	// will use 	Node<dataType> * addNodeTop(dataType value){
+	// will use 	l1.appendToTail('a');
+	Node<char> * pc(nullptr), * p(nullptr) ;
+
+	l1.appendToTail('a');
+	l1.appendToTail('b');
+	pc = l1.appendToTail('c');
+	l1.appendToTail('d');
+	l1.appendToTail('e');
+	
+	// now set tail to point to 'c'
+
+	p = l1.head ;
+	while(p->next != nullptr){
+		p = p->next ;
+	}
+	// now p->next == nullptr --> will set it to pc
+	p->next = pc ;
+
+	// And now the circular linkedlist is done and circulation node is 'c'
+}
+
+void buildNonCircularCharLinkedList(LinkedList<char> & l1){
+		// Build l1 
+	l1.appendToTail('a');
+	l1.appendToTail('t');
+	l1.appendToTail('c');
+	l1.appendToTail('o');
+	l1.appendToTail(' ');
+	l1.appendToTail('c');
+	l1.appendToTail('t');
+	l1.appendToTail('a');
+}
+
+void detectCircularLinkedList(LinkedList<char> l){
+	Node<char> * p1(nullptr), * p2(nullptr) ;
+	
+	cout << "Enter detectCircularLinkedList()" << endl ;
+
+	cout << "Testing l.head == nullptr" << endl ;
+	if (l.head == nullptr) {return ;}
+	cout << "Testing l.head->next == nullptr" << endl ;
+	if (l.head->next == nullptr) {return ;}
+
+	p1 = l.head ;
+	p2 = p1->next ;
+	
+	// test 2nd node
+	if (p2 == p1) {
+		cout << "Found circular linkedList at node : " << p2->data << endl ;
+		return ;	
+	}
+
+	// test 3rd node and further
+	p2 = p2->next ;
+
+	// for each node p2, scrolls previous nodes via p1 and check
+	// p2->next != p1
+	while(p2 != nullptr){
+		cout << "p2 : " << p2->data << " p1 : " << p1->data << endl ; 
+		while( (p2->next != p1) && (p1->next != p2) ){
+			p1 = p1->next ;
+			cout << "p2 : " << p2->data << " p1 : " << p1->data << endl ; 
+		}
+		if(p2->next == p1){ // found p2 circuled back to p1
+			cout << "Found circular linkedList at node : " << p1->data << endl ;
+			return ;
+		}
+		// otherwise the loop terminated due to p1->next == p2 --> switch to p2->next ;
+		cout << "p2 = p2->next and p1 = l.head" << endl ;
+		p2 = p2->next ;
+		p1 = l.head ;
+	}
+	if( p2 == nullptr){
+		cout << "This LinkedList is NON circular." << endl ;
+	}
+
+	return ;
+}
+
+
+
+void testDetectCircularLinkedList(){
+
+	LinkedList<char> l1 = LinkedList<char>(nullptr) ;
+
+	// need to build a circularLinkedList ...
+	// will use 	Node<dataType> * addNodeTop(dataType value){
+	// will use 	l1.appendToTail('a');
+
+	//buildCircularLinkedList(l1) ;
+	//cout << "Circular list built" << endl ;
+
+	buildNonCircularCharLinkedList(l1) ;
+	cout << "NON circular list built" << endl ;	
+
+	// now need to detect if circular linkedlist or not
+	detectCircularLinkedList(l1) ;
+}
 
 int main(){
 	//create linkedList with nodes, then print the nodes
@@ -945,8 +1047,10 @@ int main(){
 	//testSumList();
 	//testSumListForwardOrder();
 	//testPalindrome() ;
-	testIntersection() ;
-	testIntersection02() ;
+	//testIntersection() ;
+	//testIntersection02() ;
+	testDetectCircularLinkedList() ;	
+
 	return 0;
 }
 /* g++ sortFile.cpp -o sortFile
