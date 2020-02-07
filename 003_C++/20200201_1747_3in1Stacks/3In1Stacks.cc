@@ -2,11 +2,16 @@
 Describe how you could use a single array to implement 3 stacks.
 
 Hints : #2, 12, 38, 58
-To allow maximum divisions, you can shift stacks around. Can you ensure that all available capacity 
-is used ?
+12 : we could simulate 3 stacks by dividing array by 3. One might actually be much bigger than the others, through. Can we be more lexible with the divisions ?
+
+38 : if you want to allow or flexible divisions, you can shift stacks around. Can you ensure that all available capacity is used ?
+
+58
 Try thinking about the array as circular, such that the end of the array "wraps around"to the start 
 of the array
 
+Approach 1 : fixed division
+Approach 2 : flexible divisions
 */
 
 /* reflexion algorithm
