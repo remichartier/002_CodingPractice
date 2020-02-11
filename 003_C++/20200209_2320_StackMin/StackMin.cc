@@ -93,6 +93,11 @@ template <class T> class NodeMin {
 			stackMin = minValue ;
 			next = nullptr ;
 		}
+		// Destructor
+		~NodeMin (){
+			cout << "Destructor() NodeMin called" << endl ;
+		}
+
 		T getData(){
 			return data ;
 		}
@@ -120,6 +125,7 @@ template <class T> class StackMin {
 
 		// destructor 
 		~StackMin(){
+			cout << "destructor() StackMin called"<< endl ;
 			// need to pop all the nodes ....
 			while(!isEmpty()){
 				pop();
