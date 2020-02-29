@@ -1,5 +1,7 @@
 /* Description :
-How would you design a stack, which in addition to push and pop, has a function min() which returns the minimum element ? push, pop min should operate in O(1) time.
+How would you design a stack, which in addition to push and pop, 
+has a function min() which returns the minimum element ? 
+push, pop min should operate in O(1) time.
 Hints : #27, 59, 78
 */
 
@@ -20,6 +22,7 @@ template <class T> class Node {
 			data = d;
 			next = nullptr ;
 		}
+		// Destructor : not needed. Default one is enough
 };
 
 
@@ -34,10 +37,22 @@ template <class T> class Stack {
 			top = new Node<T>(d) ;
 		}
 
+		// destructor 
+		~Stack(){
+			cout << "destructor() Stack called"<< endl ;
+			// need to pop all the nodes ....
+			while(!isEmpty()){
+				pop();
+			}
+		}
+
 		T pop(){
 			if (top == nullptr){ return NULL ;}
 			T item = top->data ;
+			Node<T> * n(top);
 			top = top->next ;
+			delete n ;
+			n = nullptr;
 			return item ;
 		}
 
@@ -133,13 +148,14 @@ template <class T> class StackMin {
 		}
 		
 		T pop(){
-			//if (top == nullptr){ return NULL ;}
-			T item = top->getData() ;
-			NodeMin<T> * n(top) ;
-			top = top->getNext() ;
-			return item ;
-			delete n ;
-			n = nullptr ;
+			if (top != nullptr){ 
+				T item = top->getData() ;
+				NodeMin<T> * n(top) ;
+				top = top->getNext() ;
+				delete n ;
+				n = nullptr ;
+				return item ;
+			}
 		}
 
 		void push(T item){
@@ -162,9 +178,14 @@ template <class T> class StackMin {
 
 		// add function min()
 		T min(){
-			//if( top == nullptr) {return NULL ; }
-			// return Min value of top Node ...
-			return top->getMin() ;
+			if( top == nullptr){
+				cout << "Impossible to calculate Minimum : Stack is empty !!!" ;
+			}
+			else{
+				// return Min value of top Node ...
+				return top->getMin() ;	
+			}
+			
 		}
 
 		void printStack(){
@@ -178,15 +199,16 @@ template <class T> class StackMin {
 				p = p->getNext() ;
 			}
 			cout << endl ;
+
 		}
 
 };
 
 /* still needed to be done : 
-study how to prevent issues when top = nullptr in methods.
-study the pointers/delete needs.
-study the destructors needs.
-Study the core dump at the end.
+study how to prevent issues when top = nullptr in methods. --> done.
+study the pointers/delete needs. --> done.
+study the destructors needs. --> done.
+Study the core dump at the end. --> done.
  
 Test back the basic stack : compile + execute + test.
 Do same with the queue.
@@ -239,13 +261,16 @@ int main(){
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
 	cout << "pop()" << endl ;
-	//numbers->pop();
-	//numbers->printStack() ;
-	//cout << "minStack is : " << numbers->min() << endl ;
-	//numbers->pop();
-	//numbers->printStack() ;
-	//cout << "minStack is : " << numbers->min() << endl ;
-
+	numbers->pop();
+	numbers->printStack() ;
+	cout << "minStack is : " << numbers->min() << endl ;
+	numbers->pop();
+	numbers->printStack() ;
+	cout << "minStack is : " << numbers->min() << endl ;
+	numbers->pop();
+	numbers->printStack() ;
+	cout << "minStack is : " << numbers->min() << endl ;
+	
 	delete numbers ;
 	numbers = nullptr ;
 
