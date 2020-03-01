@@ -19,6 +19,17 @@
 	- if appears, return this reference.
 */
 
+/* Note : TO BE DONE.
+
+	THE free() OF NODES SHOULD BE REPLACECED BY "delete ptr ; ptr = nullptr ;"	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+
+
+	AND ALL POINTERS SHOULD BE "deleted" AT THE END + SET TO nullptr
+
+	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+*/
+
+
 #include <string>
 #include <iostream>
 #include <set>

@@ -219,8 +219,8 @@ study the pointers/delete needs. --> done.
 study the destructors needs. --> done.
 Study the core dump at the end. --> done.
  
-Test back the basic stack : compile + execute + test.
-Do same with the queue.
+Test back the basic stack : compile + execute + test. --> done.
+Do same with the queue. --> done.
 
 */
 

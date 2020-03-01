@@ -18,6 +18,15 @@
 	Hints :  #7, #30, #71, #95, #109
 
 */
+/* Note : TO BE DONE.
+
+	THE free() OF NODES SHOULD BE REPLACECED BY "delete ptr ; ptr = nullptr ;"	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+
+
+	AND ALL POINTERS SHOULD BE "deleted" AT THE END + SET TO nullptr
+
+	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+*/
 
 /* reflexion on algorithm :
 

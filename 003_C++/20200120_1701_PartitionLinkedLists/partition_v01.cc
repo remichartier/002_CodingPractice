@@ -13,15 +13,21 @@
 
 */
 
+/* Note : TO BE DONE.
+
+	THE free() OF NODES SHOULD BE REPLACECED BY "delete ptr ; ptr = nullptr ;"	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+
+
+	AND ALL POINTERS SHOULD BE "deleted" AT THE END + SET TO nullptr
+
+	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+*/
+
 /* reflexion on algorithm :
 
 	2 pointers p1 p2.
 	p2 scrolls the list.
 	p1 points to last element > partition number.
-
-
-
-
 */
 
 

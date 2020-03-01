@@ -11,6 +11,15 @@ Use rotational array / with modulos to store the elements read.
 scroll list until the end. if l is the index of the latest element, (l+1)%k is the kth element...
 */
 
+/* Note : TO BE DONE.
+
+	THE free() OF NODES SHOULD BE REPLACECED BY "delete ptr ; ptr = nullptr ;"	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+
+
+	AND ALL POINTERS SHOULD BE "deleted" AT THE END + SET TO nullptr
+
+	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+*/
 
 
 /* 

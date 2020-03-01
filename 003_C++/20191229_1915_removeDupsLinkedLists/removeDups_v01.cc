@@ -7,6 +7,17 @@ How would you solve this problem if a temporary buffer is not allowed.
 	Hints :  #9, #40
 
 */
+
+/* Note : TO BE DONE.
+
+	THE free() OF NODES SHOULD BE REPLACECED BY "delete ptr ; ptr = nullptr ;"	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+
+
+	AND ALL POINTERS SHOULD BE "deleted" AT THE END + SET TO nullptr
+
+	+ CLASS DESTRUCTORS SHOULD BE IMPLEMENTED !
+*/
+
 /* 
 - define Node class
 - define linked list class
