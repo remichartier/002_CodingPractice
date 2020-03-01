@@ -8,11 +8,12 @@ SetOfStacks should be composed of several stacks
 and should create a new stack once the previous one 
 exceeds capacity.
 its method push() and pop() should behave identically to a single stack
-(ie pop should return the same value as it would if there were just a signle 
+(ie pop should return the same value as it would if there were just a single 
 stack)
 
 FOLLOW UP : 
-Impelment a function popAt(int index) which performs a pop operation on a specific sub-stack.
+Implement a function popAt(int index) which performs a pop operation on a 
+specific sub-stack.
 
 Hints : #64, #81
 */
@@ -117,6 +118,46 @@ template <class T> class Stack {
 			cout << endl ;
 		}
 };
+
+
+/* implement a data structure SetOfStacks that mimics : 
+
+"imagine a stack of plates. If the stack gets too high, 
+it might topple, therefore in real life, we would likely 
+start a new stack when the previous stack exceeds some threshold"
+
+SetOfStacks should be composed of several stacks
+and should create a new stack once the previous one 
+exceeds capacity.
+its method push() and pop() should behave identically to a single stack
+(ie pop should return the same value as it would if there were just a single 
+stack)
+
+FOLLOW UP : 
+Implement a function popAt(int index) which performs a pop operation on a 
+specific sub-stack.
+
+Hints : #64, #81
+*/
+
+/* reflexion :
+should also have methods : 
+
+	pop()
+	push(item)
+	peek()
+	isEmpty()	
+
+	Should also be a LIFO : Last In First Out. But a LIFO of stacks...
+
+	- Needs to have a threshold parameter or constant.
+	
+	- should have a top attribute (top would point to the latest stack)
+
+	- should have a stackNode defined, attribute : : current stack + pointing to next stack.
+
+	Specific pop/push/peek/isEmpty process
+*/
 
 int main(){
 
