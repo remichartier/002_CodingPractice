@@ -104,6 +104,7 @@ template <class T> class NodeMin {
 	public : 
 		// Constructor
 		NodeMin<T> (T d,T minValue){
+			cout << "NodeMin constructor called" << endl ;
 			data = d;
 			stackMin = minValue ;
 			next = nullptr ;
@@ -134,6 +135,7 @@ template <class T> class StackMin {
 	public : 
 		//constructor
 		StackMin(T d){
+			cout << "StackMin constructor called" << endl ;
 			// for the first node of the stack, minimum is the item itself.
 			top = new NodeMin<T>(d,d) ;
 		}
@@ -148,7 +150,10 @@ template <class T> class StackMin {
 		}
 		
 		T pop(){
-			if (top != nullptr){ 
+			if (isEmpty()){ 
+				cout << "Stack is empty !!! ";
+			}
+			else {
 				T item = top->getData() ;
 				NodeMin<T> * n(top) ;
 				top = top->getNext() ;
@@ -168,8 +173,12 @@ template <class T> class StackMin {
 		}	
 
 		T peek(){ // return top item of stack
-			if( top == nullptr) {return NULL ; }
-			return top->getData() ;
+			if(isEmpty()) {
+				cout << "Stack is empty !!!" ; 
+			}
+			else{
+				return top->getData() ;	
+			}			
 		}
 
 		bool isEmpty(){
@@ -178,7 +187,7 @@ template <class T> class StackMin {
 
 		// add function min()
 		T min(){
-			if( top == nullptr){
+			if( isEmpty()){
 				cout << "Impossible to calculate Minimum : Stack is empty !!!" ;
 			}
 			else{
@@ -189,7 +198,7 @@ template <class T> class StackMin {
 		}
 
 		void printStack(){
-			if(top == nullptr){
+			if(isEmpty()){
 				cout << "Stack is empty" << endl ;
 				return ;
 			}
@@ -219,22 +228,27 @@ int main(){
 
 	StackMin<int> * numbers = new StackMin<int>(0) ;
 	numbers->printStack() ;
+
 	cout << "push()" << endl ;
 	numbers->push(10);
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "push()" << endl ;
 	numbers->push(5);
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "push()" << endl ;
 	numbers->push(15);
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "push()" << endl ;
 	numbers->push(1);
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "push()" << endl ;
 	numbers->push(-1);
 	numbers->printStack() ;
@@ -244,29 +258,38 @@ int main(){
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
 	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
+	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
+
+	cout << "pop()" << endl ;
 	numbers->pop();
 	numbers->printStack() ;
 	cout << "minStack is : " << numbers->min() << endl ;
