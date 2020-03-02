@@ -158,13 +158,24 @@ should also have methods :
 
 	Specific pop/push/peek/isEmpty process
 */
-template <class T> SetOfStacks{
+
+template <class T> StackNode{
 	private : 
 		Stack<T> * top ;
 		Stack<T> * next ;
 	public : 
 		// constructor
 		SetOfStacks<T>(){
+		}
+};
+
+template <class T> SetOfStacks{
+	private : 
+		StackNode<T> Node ;
+		StackNode<T> * top ;
+	public : 
+		// constructor
+		SetOfStacks<T>(T data){
 		}
 };
 
