@@ -158,6 +158,17 @@ should also have methods :
 
 	Specific pop/push/peek/isEmpty process
 */
+template <class T> SetOfStacks{
+	private : 
+		Stack<T> * top ;
+		Stack<T> * next ;
+	public : 
+		// constructor
+		SetOfStacks<T>(){
+		}
+};
+
+
 
 int main(){
 
