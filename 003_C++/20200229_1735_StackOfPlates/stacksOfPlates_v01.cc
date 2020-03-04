@@ -144,39 +144,43 @@ Hints : #64, #81
 should also have methods : 
 
 	pop()
-	push(item)
-	peek()
-	isEmpty()	
-
-	Should also be a LIFO : Last In First Out. But a LIFO of stacks...
+	push(item)	
 
 	- Needs to have a threshold parameter or constant.
-	
-	- should have a top attribute (top would point to the latest stack)
 
-	- should have a stackNode defined, attribute : : current stack + pointing to next stack.
+	- Suggest a dynamic table/vector of stacks
+	- attribute number of stacks.
+	- definition of threshold.
 
-	Specific pop/push/peek/isEmpty process
 */
 
-template <class T> StackNode{
-	private : 
-		Stack<T> * top ;
-		Stack<T> * next ;
-	public : 
-		// constructor
-		SetOfStacks<T>(){
-		}
-};
+# define MAX_TAX_SIZE = 10
 
 template <class T> SetOfStacks{
 	private : 
-		StackNode<T> Node ;
-		StackNode<T> * top ;
+		vector<Stacks> listOfStacks ;
+		unsigned int nbStack ;
+
+		
 	public : 
 		// constructor
-		SetOfStacks<T>(T data){
+		SetOfStacks(){
+			nbStack = 0 ;
 		}
+
+		void push<T>(T data){
+			if(nbStack == 0){
+				// need to create stack, add it to list of stacks, increment nbStack
+				listOfStacks.push_back(new Stack<T>(data));
+				++nbStack ;
+			}
+			else {
+				//test size latest stack.
+				// depending of size, add to current stack or create new stack.
+				
+			}
+		}
+
 };
 
 
