@@ -185,6 +185,7 @@ template <class T> SetOfStacks{
 
 
 
+
 int main(){
 
 	cout << "Stack creation with 0" << endl ;
