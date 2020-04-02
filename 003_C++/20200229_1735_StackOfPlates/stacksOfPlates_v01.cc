@@ -27,6 +27,8 @@ Hints : #64, #81
 	
 */
 #include<iostream>
+#include<vector>
+
 using namespace std;
 
 template <class T> class Node {
@@ -57,11 +59,13 @@ template <class T> class Stack {
 	
 	private : 
 		Node<T> * top ;
+		int size ;
 	public : 
 		//Constructor
 		Stack(T d){
 			cout << "Stack constructor called" << endl ;
 			top = new Node<T>(d) ;
+			size = 1 ;
 		}
 		//Destructor
 		~Stack(){
@@ -81,6 +85,7 @@ template <class T> class Stack {
 				top = top->getNext() ;
 				delete n ;
 				n = nullptr ;
+				-- size;
 				return item ;	
 			}
 		}
@@ -89,6 +94,7 @@ template <class T> class Stack {
 			Node<T> * n = new Node<T>(item) ;
 			n->setNext(top) ;
 			top = n ;
+			++ size ;
 		}	
 
 		T peek(){ // return top item of stack
@@ -116,6 +122,10 @@ template <class T> class Stack {
 				p = p->getNext() ;
 			}
 			cout << endl ;
+		}
+
+		int getSize(){
+			return(size) ;
 		}
 };
 
@@ -154,11 +164,11 @@ should also have methods :
 
 */
 
-# define MAX_TAX_SIZE = 10
+# define MAX_STACK_SIZE  10
 
-template <class T> SetOfStacks{
+template <class T> class SetOfStacks{
 	private : 
-		vector<Stacks> listOfStacks ;
+		vector<Stack<T>> listOfStacks ;
 		unsigned int nbStack ;
 
 		
@@ -168,7 +178,7 @@ template <class T> SetOfStacks{
 			nbStack = 0 ;
 		}
 
-		void push<T>(T data){
+		void push(T data){
 			if(nbStack == 0){
 				// need to create stack, add it to list of stacks, increment nbStack
 				listOfStacks.push_back(new Stack<T>(data));
@@ -178,6 +188,19 @@ template <class T> SetOfStacks{
 				//test size latest stack.
 				// depending of size, add to current stack or create new stack.
 				
+				// get current stack : 
+				Stack<T> & CurrentStack = listOfStacks.back() ;
+				// if stack not yet full
+				if (CurrentStack.getSize <MAX_STACK_SIZE){
+					// we can push on current stack
+				}
+				else {
+					// need to create a new stack with this new data, 
+					// and add it to list
+					listOfStacks.push_back(new Stack<T>(data));
+					++nbStack ;
+				}
+
 			}
 		}
 
