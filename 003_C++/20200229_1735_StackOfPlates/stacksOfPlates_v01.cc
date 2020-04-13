@@ -164,7 +164,7 @@ should also have methods :
 
 */
 
-# define MAX_STACK_SIZE  10
+# define MAX_STACK_SIZE  3
 
 template <class T> class SetOfStacks{
 	private : 
@@ -189,19 +189,39 @@ template <class T> class SetOfStacks{
 				// depending of size, add to current stack or create new stack.
 				
 				// get current stack : 
-				Stack<T> & CurrentStack = listOfStacks.back() ;
+				Stack<T> & currentStack = listOfStacks.back() ;
 				// if stack not yet full
-				if (CurrentStack.getSize <MAX_STACK_SIZE){
+				if (currentStack.getSize() < MAX_STACK_SIZE){
 					// we can push on current stack
+					currentStack.push(data) ;
 				}
 				else {
 					// need to create a new stack with this new data, 
 					// and add it to list
-					listOfStacks.push_back(new Stack<T>(data));
+					Stack<T> & currentStack = new Stack<T>(data) ;
+					listOfStacks.push_back(currentStack);
 					++nbStack ;
 				}
 
 			}
+		}
+
+		T pop(){
+			// test that setOfStacks not empty, otherwise raise exception ....
+
+			// get current stack.
+			Stack<T> & currentStack = listOfStacks.back() ;
+			// pop() from current stack.
+			T data = currentStack.pop() ;
+			// if current stack is empty, remove stack from setOfStacks.
+			if (currentStack.getsize() == 0){
+				listOfStacks.pop_back() ;
+				--nbStack ;
+				// free currentStack...
+				currentStack.~Stack();
+			}
+			//return data popped
+			return data ;
 		}
 
 };
@@ -211,8 +231,11 @@ template <class T> class SetOfStacks{
 
 int main(){
 
-	cout << "Stack creation with 0" << endl ;
-	Stack<int> stck = Stack<int>(0) ;
+	cout << "setOfStacks push(0)" << endl ;
+	
+	SetOfStacks<int> s = SetOfStacks<int>() ;
+	s.push(0) ;
+	/* 
 	stck.print();
 
 	cout << "Add to stack 1" << endl ;
@@ -278,6 +301,8 @@ int main(){
 	stck.print();
 
 	cout << "TOP OF STACK : " << stck.peek() << endl ;
+
+	*/
 
 
 	return 0;
