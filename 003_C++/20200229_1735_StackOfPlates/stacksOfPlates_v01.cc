@@ -168,7 +168,7 @@ should also have methods :
 
 template <class T> class SetOfStacks{
 	private : 
-		vector<Stack<T>> listOfStacks ;
+		vector<Stack<T> *> listOfStacks ;
 		unsigned int nbStack ;
 
 		
@@ -176,6 +176,15 @@ template <class T> class SetOfStacks{
 		// constructor
 		SetOfStacks(){
 			nbStack = 0 ;
+		}
+
+		// destructor
+		~SetOfStacks(){
+			cout << "listOfStacks destructor called" << endl;
+			while (nbStack > 0){
+				pop() ;
+			}
+			
 		}
 
 		void push(T data){
@@ -189,16 +198,16 @@ template <class T> class SetOfStacks{
 				// depending of size, add to current stack or create new stack.
 				
 				// get current stack : 
-				Stack<T> & currentStack = listOfStacks.back() ;
+				Stack<T> * currentStack = listOfStacks.back() ;
 				// if stack not yet full
-				if (currentStack.getSize() < MAX_STACK_SIZE){
+				if (currentStack->getSize() < MAX_STACK_SIZE){
 					// we can push on current stack
-					currentStack.push(data) ;
+					currentStack->push(data) ;
 				}
 				else {
 					// need to create a new stack with this new data, 
 					// and add it to list
-					Stack<T> & currentStack = new Stack<T>(data) ;
+					Stack<T> * currentStack = new Stack<T>(data) ;
 					listOfStacks.push_back(currentStack);
 					++nbStack ;
 				}
@@ -210,18 +219,33 @@ template <class T> class SetOfStacks{
 			// test that setOfStacks not empty, otherwise raise exception ....
 
 			// get current stack.
-			Stack<T> & currentStack = listOfStacks.back() ;
+			Stack<T> * currentStack = listOfStacks.back() ;
 			// pop() from current stack.
-			T data = currentStack.pop() ;
+			T data = currentStack->pop() ;
 			// if current stack is empty, remove stack from setOfStacks.
-			if (currentStack.getsize() == 0){
+			if (currentStack->getSize() == 0){
 				listOfStacks.pop_back() ;
 				--nbStack ;
 				// free currentStack...
-				currentStack.~Stack();
+				currentStack->~Stack();
 			}
 			//return data popped
 			return data ;
+		}
+
+		void print(){
+			if(nbStack == 0){
+				// need to create stack, add it to list of stacks, increment nbStack
+				cout << "ListOfStacks is empty ...." << endl ;
+			}
+			else {
+				cout << "Content of ListOfStacks : ...." << endl ;
+				
+				for(auto p : listOfStacks){
+					p->print() ;
+				}
+
+			}	
 		}
 
 };
@@ -233,76 +257,19 @@ int main(){
 
 	cout << "setOfStacks push(0)" << endl ;
 	
-	SetOfStacks<int> s = SetOfStacks<int>() ;
-	s.push(0) ;
-	/* 
-	stck.print();
+	SetOfStacks<int> * s = new SetOfStacks<int>() ;
+	for(int i=0;i<10;++i){
+		s->push(i) ;
+	}
+	
+	s->print() ;
+	s->pop();
+	s->print() ;
+	s->pop() ;
+	s->print() ;
+	s->~SetOfStacks() ;
+	s->print() ;
 
-	cout << "Add to stack 1" << endl ;
-	stck.push(1) ;
-	stck.print();
-
-	cout << "Add to stack 2" << endl ;
-	stck.push(2) ;
-	stck.print();
-
-	cout << "Add to stack 3" << endl ;
-	stck.push(3) ;
-	stck.print();
-
-	cout << "Add to stack 4" << endl ;
-	stck.push(4) ;
-	stck.print();
-
-	cout << "Add to stack 5" << endl ;
-	stck.push(5) ;
-	stck.print();
-
-	cout << "Add to stack 6" << endl ;
-	stck.push(6) ;
-	stck.print();
-
-	cout << "TOP OF STACK : " << stck.peek() << endl ;
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "pop() !!!!" << endl ;
-	stck.pop() ;
-	stck.print();
-
-	cout << "TOP OF STACK : " << stck.peek() << endl ;
-
-	*/
 
 
 	return 0;
