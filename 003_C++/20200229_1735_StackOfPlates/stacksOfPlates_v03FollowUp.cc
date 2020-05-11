@@ -93,7 +93,7 @@ template <class T> class Stack {
 				top = top->getNext() ;
 				delete n ;
 				n = nullptr ;
-				-- size;
+				--size;
 				return item ;	
 			}
 		}
@@ -247,15 +247,18 @@ template <class T> class SetOfStacks{
 		// destructor
 		~SetOfStacks(){
 			cout << "listOfStacks destructor called" << endl;
-			/* problem with following code, need to check why .. : 
+			// problem with following code, need to check why .. : 
+
+			//Had problem due to getSize() using "-- size" instead of "--size"
+			// but now working ok.
 			while (nbStack > 0){
 				pop() ;
 			}
 
-			In the meantime, replacing by following code*/
-			for ( int i =nbStack-1;i>=0;--i){
+			//In the meantime, replacing by following code
+			/*for ( int i =nbStack-1;i>=0;--i){
 				removeStackFromList(i);
-			}
+			}*/
 			
 		}
 
@@ -297,6 +300,7 @@ template <class T> class SetOfStacks{
 			T data = currentStack->pop() ;
 			// if current stack is empty, remove stack from setOfStacks.
 			if (currentStack->getSize() == 0){
+			// alternative : if (currentStack->isEmpty()){
 				listOfStacks.pop_back() ;
 				--nbStack ;
 				// free currentStack...
