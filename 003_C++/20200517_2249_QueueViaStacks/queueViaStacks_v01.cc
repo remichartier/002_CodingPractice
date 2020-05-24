@@ -133,22 +133,30 @@ enum LastAction {PUSH,POP} ;
 
 template <class T> class MyQueue{
 	private : 
-		Stack<T> mainStack;
-		Stack<T> pullStack;
+		Stack<T> * mainStack;
+		Stack<T> * pullStack;
 		LastAction lastAction;
 		
 	public : 
 		// constructor
 		MyQueue(T data){
 			 mainStack = new Stack<T>(data);
+			 pullStack = new Stack<T>(data); 
+			 pullStack->pop();
 			 lastAction = PUSH ;
 		}
 
 		// destructor
 		~MyQueue(){
 			cout << "listOfStacks destructor called" << endl;
-			mainStack.~Stack();
-			pullStack.~Stack();
+			if(mainStack != nullptr){
+				mainStack->~Stack();
+				mainStack = nullptr;
+			}
+			if(pullStack != nullptr){
+				pullStack->~Stack();
+				pullStack = nullptr;
+			}
 		}
 
 		// Methods
@@ -156,38 +164,46 @@ template <class T> class MyQueue{
 			
 			if(lastAction == POP){
 				// need to rebuild mainStack from pullStack
-				reverseStack(&pullStack,&mainStack);
+				reverseStack(pullStack,mainStack);
 			}
-			mainStack.push(data);
+			mainStack->push(data);
 			lastAction = PUSH ;
 		}
 
 		T pop(){
 			// test if there is something to pop !!!!
-			if((lastAction == POP) && (pullStack.isEmpty())){
+			if((lastAction == POP) && (pullStack->isEmpty())){
 				cout << "Sorry, Queue already empty, can not pop anything, return 0 as default !" << endl ;
 				return 0;
 			}
 
 			if(lastAction == PUSH){
 				// need to rebuild pullStack from mainStack
-				reverseStack(&mainStack,&pullStack);
+				reverseStack(mainStack,pullStack);
 			}	
 			
 			lastAction = POP ;
-			return(pullStack.pop(data));
+			return(pullStack->pop());
 		}
 
-		private void reverseStack(Stack<T> * pSource, Stack<T> * pTarget){
+		void reverseStack(Stack<T> * pSource, Stack<T> * pTarget){
 			// remove target stack and create it again
 			if (pSource->isEmpty()){
-				cout << "reversStack() : source stack is empty" << endl ;
+				//cout << "reverseStack() : source stack is empty" << endl ;
 				return;
 			}
-			pTarget->~Stack();
-			pTarget->Stack(pSource->pop());
+
+			//cout << "Empty pTarget" << endl ;
+			while(!pTarget->isEmpty()){
+				pTarget->pop();
+			}
+			
 			while(!pSource->isEmpty()){
-				pTarget->push(pSource->pop());
+				//cout << "while(!pSource->isEmpty())" << endl ;
+				//cout << "T data = pSource->pop() ;" << endl ;
+				T data = pSource->pop() ;
+				//cout << "pTarget->push(data);" << endl ;
+				pTarget->push(data);	
 			}
 		}
 
@@ -195,39 +211,119 @@ template <class T> class MyQueue{
 		void print(){
 			if(lastAction == POP){
 				// only need to print pull stack ...
-				pullStack.print();
+				cout << "last action == POP --> pullStack->print()" << endl;
+				pullStack->print();
 			}
 			else{ // lastAction == PUSH
 				// Then need to reverse mainStack, print pull stack, and reverse it back to mainStack ...
-				reverseStack(&mainStack,&pullStack);
-				pullStack.print();
-				reverseStack(&pullStack,&mainStack);
+				cout << "last action == PUSH --> reverse, pullStack-> print(), reverse" << endl;
+				cout << "reverseStack(mainStack,pullStack);" << endl;
+				reverseStack(mainStack,pullStack);
+				cout << "pullStack->print();" << endl;
+				pullStack->print();
+				cout << "reverseStack(pullStack,mainStack);" << endl;
+				reverseStack(pullStack,mainStack);
 			}
 		}
 
 };
 
-// NOTE : not yet compiled
+// NOTE : Now fully compile, + tested... Working
 
 
 int main(){
 
+	int i;
 	cout << "setOfStacks push(0)" << endl ;
 	
-	MyQueue<int> * s = new MyQueue<int>() ;
-	for(int i=0;i<10;++i){
+	MyQueue<int> * s = new MyQueue<int>(0) ;
+	for(i=1;i<10;++i){
 		s->push(i) ;
 	}
-	
+	cout << "s->print()" << endl ;
 	s->print() ;
+	cout << "s->pop()" << endl ;
 	s->pop();
+	cout << "s->print()" << endl ;
 	s->print() ;
+
+
+	cout << "s->push(++1)" << endl ;
+	s->push(++i);
+	cout << "s->print()" << endl ;
+	s->print() ;
+
+	cout << "s->pop()" << endl ;
 	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+
+	cout << "s->push(++1)" << endl ;
+	s->push(++i);
+	cout << "s->print()" << endl ;
+	s->print() ;
+
+
+
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
 	s->print() ;
 	
 
-	s->~MyQueue() ;
+	cout << "s->push(++1)" << endl ;
+	s->push(++i);
+	cout << "s->print()" << endl ;
 	s->print() ;
+
+
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	
+	cout << "s->push(++1)" << endl ;
+	s->push(++i);
+	cout << "s->print()" << endl ;
+	s->print() ;
+
+	cout << "s->push(++1)" << endl ;
+	s->push(++i);
+	cout << "s->print()" << endl ;
+	s->print() ;
+
+	cout << "s->pop()" << endl ;
+	s->pop() ;
+	cout << "s->print()" << endl ;
+	s->print() ;
+	
+	cout << "s->~MyQueue()" << endl ;
+	s->~MyQueue() ;
+	
 
 	return 0;
 }
