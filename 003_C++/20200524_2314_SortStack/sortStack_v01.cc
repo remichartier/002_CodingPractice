@@ -142,7 +142,7 @@ Hints : #15, #32, #43
 
 
 
-// Progress : still under work, not compiling yet, not runable yet
+// Progress : working. Completed.
 
 
 int main(){
@@ -173,8 +173,8 @@ int main(){
 			// keep it in mem variable.
 			// while (sorted not empty) and mem > sorted.peek()
 				//s.push(sorted.pull())
-			// if mem < sorted.peek()
-				//sorted.push(mem)
+			
+			//sorted.push(mem)
 	// end while	
 	// at the end, we have a sorted stack in sorted
 	// print sorted.
@@ -183,29 +183,41 @@ int main(){
 	// Algorithm implementation : 
 	// pull top of s stack, push to sorted stack.
 	sorted->push(s->pop()) ;
+	//cout<<"1st pop and add to sorted stack. << sorted stack : " ;
+	//sorted->print() ;
 	// then while s not empty
+	//cout << "while !s->isEmpty()" << endl ;
 	while(!s->isEmpty()){
 		// pull top of s stack.
 		mem = s->pop();
+		//cout << "mem = s->pop() --> mem = "<< to_string(mem) << endl;
 		// if <= top sorted stack
+		//cout << "if(mem <= sorted->peek()){" << endl;
 		if(mem <= sorted->peek()){
 			// push to sorted stack
+			//cout << "sorted->push(mem); sorted -->" ;
 			sorted->push(mem);
+			//sorted->print();
 		}
 		// if > top sorted stack
 		else {
+			//cout << "else{" << endl;
 			// keep it in mem variable.
 			// while (sorted not empty) and mem > sorted.peek()
-			while((!sorted->isEmpty()) && (mem > sorted->peek()) ){
-				//s.push(sorted.pull())
-				s->push(sorted->pop()) ;
+			while((!sorted->isEmpty()) && (mem > sorted->peek())){
+				//cout << "while((!sorted->isEmpty())&& (mem > sorted->peek()))){" << endl ;
+				if(mem > sorted->peek()){
+					//cout << "if(mem > sorted->peek()) )" << endl ;
+					//s.push(sorted.pull())
+					s->push(sorted->pop()) ;
+					//cout << "s->push(sorted->pop()) ; s -->  : ";
+					//s->print();
+				}
 			}
-			// if mem < sorted.peek()
-			if(mem < sorted->peek()){
-				//sorted.push(mem)
-				sorted->push(mem) ;
-			}
-			
+			// Now either sorted is empty or m <= sorted->peek()
+			// --> sorted->push(mem)
+			sorted->push(mem) ;
+			//cout << "sorted->push(mem) ;" << endl ;
 		}
 	// end while
 	}
