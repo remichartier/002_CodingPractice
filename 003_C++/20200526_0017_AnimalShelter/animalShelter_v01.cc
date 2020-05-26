@@ -153,11 +153,15 @@ They cannot select which specific animal they would like.
 Create the data structures to maintain this system and implement operations such as enqueue, 
 dequeueAny, dequeueDog, and dequeueCat.
 
-You may usethe built-in LinkedList data structure.
+You may use the built-in LinkedList data structure.
 
 Hints : #22, #56, #63
 */
 
+/* 2 queues, 1 for dogs, 1 for cats. Data in queues is date of arrival.
+Then when people want to pick animal, either compare top dates, or take top of cat and dogs if
+animal is specified.
+*/
 
 
 // Progress : Not yet implemented.
