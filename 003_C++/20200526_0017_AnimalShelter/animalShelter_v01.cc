@@ -27,6 +27,7 @@ Hints : #22, #56, #63
 #include<iostream>
 #include<vector>
 #include <stdlib.h>     /* srand, rand */
+#include <utility> 		/* swap */
 
 using namespace std;
 
@@ -163,17 +164,108 @@ Then when people want to pick animal, either compare top dates, or take top of c
 animal is specified.
 */
 
+enum Breed {CAT,DOG,NONE};
 
-// Progress : Not yet implemented.
+class Animal {
+	private :
+		Breed type;
+		int entryDate;
+	public :
+		// constructors
+		Animal(Breed b, int date){
+			type = b ;
+			entryDate = date ; // format YYYYMMDD
+		}
+
+		// need copy constructor
+		Animal(const Animal& a){
+			//type = a.getBreed() ;
+			type = a.type;
+			//entryDate = a.getEntryDate() ; // format YYYYMMDD
+			entryDate = a.entryDate ;
+		}
+		// methods
+		Breed getBreed(){
+			return type ;
+		}
+		int getEntryDate(){
+			return entryDate ;
+		}
+		// need operateur d'affectation
+		Animal& operator=(Animal a){
+			swap(*this, a);
+			return *this;
+		}
+};
+
+class AnimalShelter {
+	private : 
+		Stack<Animal> catStack ;
+		Stack<Animal> dogStack ;
+	public : 
+		AnimalShelter(){
+			catStack = Stack<Animal>();
+			dogStack = Stack<Animal>();
+		}
+
+		void enqueue(Animal a){
+			if(a.getBreed() == CAT){
+				catStack.push(a);
+			}
+			else{
+				dogStack.push(a);
+			}
+		}
+		Animal dequeueAny(){
+			// need to check cat and dog queue status
+			// if some are empty, can not use it.
+			// if both are not empty, peek to choose
+			// which queue to use
+
+			if(catStack.isEmpty() && dogStack.isEmpty()){
+				cout << "No cats nor dogs are available." << endl;
+				return(Animal(NONE,0));
+			}
+			if(catStack.isEmpty()){
+				return(dogStack.pop());
+			}
+			if(dogStack.isEmpty()){
+				return(catStack.pop());
+			}
+			// if no stack empty, need to peek and compare dates
+			Animal cat = catStack.peek();
+			Animal dog = dogStack.peek();
+
+			if ((cat.getEntryDate()) >= (dog.getEntryDate()) ){
+				return (catStack.pop()) ;
+			}
+			else{
+				return(dogStack.pop()) ;
+			}
+		}
+		Animal dequeueCat(){
+			if(catStack.isEmpty()){
+				cout << "No cats is available." << endl;
+				return (Animal(NONE,0));
+			}
+			return(catStack.pop());
+		}
+		Animal dequeueDog(){
+			if(dogStack.isEmpty()){
+				cout << "No dog is available." << endl;
+				return (Animal(NONE,0));
+			}
+			return(dogStack.pop());
+		}
+};
+
+// Progress : Not compiling yet.
 
 
 int main(){
 
-	int mem;
-	
-	Stack<int> * s = new Stack<int>(0) ;
-
-	s->~Stack() ;
+	//Stack<int> * s = new Stack<int>(0) ;
+	//s->~Stack() ;
 	return 0;
 }
 /* g++ sortFile.cpp -o sortFile
