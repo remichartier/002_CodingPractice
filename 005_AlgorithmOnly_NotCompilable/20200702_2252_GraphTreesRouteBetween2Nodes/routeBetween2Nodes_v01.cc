@@ -47,6 +47,9 @@ boolean areNodesConnected(Node nodeA, Node nodeB){
 			return(true);
 		}
 		for (n in neighboor) {
+			if( n = nodeB){
+				return(true);
+			}
 			if (n.visited == false) {
 				n.visited = true;
 				queue.enqueue(n); 
