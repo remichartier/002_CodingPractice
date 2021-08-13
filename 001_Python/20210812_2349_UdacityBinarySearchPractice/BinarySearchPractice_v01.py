@@ -12,10 +12,27 @@ doesn't exist in the list."""
 
 def binary_search(input_array, value):
     """Your code goes here."""
-   
+    low = 0
+    high = len(input_array) -1
+    if high == -1:
+        return -1
+    middle = int(high/2)
+    while (middle != low) or (middle != high):
+        if input_array[middle] == value : 
+            return middle
+        if value < input_array[middle]:
+            high = middle - 1
+        else:
+            low = middle +1
+        middle = int((high + low) / 2)
+    if input_array[low] == value:
+        return low
+    if input_array[high] == value:
+        return high
+    return -1
 
 test_list = [1,3,9,11,15,19,29]
 test_val1 = 25
 test_val2 = 15
-print binary_search(test_list, test_val1)
-print binary_search(test_list, test_val2)
+print(binary_search(test_list, test_val1))
+print(binary_search(test_list, test_val2))
