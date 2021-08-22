@@ -1,6 +1,9 @@
 """Implement quick sort in Python.
 Input a list.
 Output a sorted list."""
+
+# Note : method always starting with last element as pivot
+
 def quicksort(array):
     # quick sort with pivot
     # Then quick sort left_side of pivot and quick_sort right side of pivot
