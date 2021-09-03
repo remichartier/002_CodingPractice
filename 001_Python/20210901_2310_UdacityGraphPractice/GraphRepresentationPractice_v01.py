@@ -1,27 +1,42 @@
 """Graph Representation Practice
 
-You should become comfortable with various graph representations—graphs crop up often in interviews and in computer science in general, and you could need to represent it in any of it's forms.
-In this exercise you'll need to add functions to a Graph class to return various representations of the same graph. Your graph will have two different components: Nodes and Edges.
+You should become comfortable with various graph representations—graphs crop up often 
+in interviews and in computer science in general, and you could need to represent it in 
+any of it's forms.
+In this exercise you'll need to add functions to a Graph class to return 
+various representations of the same graph. Your graph will have two different 
+components: Nodes and Edges.
 class Node(object):
     def __init__(self, value):
         self.value = value
         self.edges = []
-Nodes are pretty much the same as they were in trees. Instead of having a set number of children, each node has a list of Edges.
+Nodes are pretty much the same as they were in trees. Instead of having a set number of 
+children, each node has a list of Edges.
 class Edge(object):
     def __init__(self, value, node_from, node_to):
         self.value = value
         self.node_from = node_from
         self.node_to = node_to
-Here, we assume that edges have both a value and a direction. An edge points from one node to another—the node it starts at is the node_from and the node it ends at is the node_to. You can envision it as node_from -> node_to.
+Here, we assume that edges have both a value and a direction. An edge points from one 
+node to another—the node it starts at is the node_from and the node it ends at 
+is the node_to. You can envision it as node_from -> node_to.
 The base of the Graph class looks something like this:
 class Graph(object):
     def __init__(self, nodes=[], edges=[]):
         self.nodes = nodes
         self.edges = edges
-A Graph class contains a list of nodes and edges. You can sometimes get by with just a list of edges, since edges contain references to the nodes they connect to, or vice versa. However, our Graph class is built with both for the following reasons:
-    • If you're storing a disconnected graph, not every node will be tied to an edge, so you should store a list of nodes.
-    • We could probably leave it there, but storing an edge list will make our lives much easier when we're trying to print out different types of graph representations.
-Unfortunately, having both makes insertion a bit complicated. We can assume that each value is unique, but we need to be careful about keeping both nodes and edges updated when either is inserted. You'll also be given these insertion functions to help you out:
+A Graph class contains a list of nodes and edges. You can sometimes get by 
+with just a list of edges, since edges contain references to the nodes they connect to, 
+or vice versa. However, our Graph class is built with both for the following 
+reasons:
+    • If you're storing a disconnected graph, not every node will be tied to an edge, so 
+    you should store a list of nodes.
+    • We could probably leave it there, but storing an edge list will make our lives much 
+    easier when we're trying to print out different types of graph representations.
+Unfortunately, having both makes insertion a bit complicated. We can assume that each 
+value is unique, but we need to be careful about keeping both nodes and 
+edges updated when either is inserted. You'll also be given these insertion 
+functions to help you out:
 ...
 
 Alright, time to code the rest!
@@ -73,7 +88,10 @@ class Graph(object):
         """Don't return a list of edge objects!
         Return a list of triples that looks like this:
         (Edge Value, From Node Value, To Node Value)"""
-        return []
+        lst = []
+        for edge in self.edges:
+            lst.append((edge.value,edge.node_from.value,edge.node_to.value))
+        return lst
 
     def get_adjacency_list(self):
         """Don't return any Node or Edge objects!
@@ -83,7 +101,17 @@ class Graph(object):
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
-        return []
+
+        # Determine max indices
+        maxi = self.get_number_indices()
+        lst = [None] * (maxi+1)
+        for edge in self.edges:
+            tupl = (edge.node_to.value,edge.value)
+            if lst[edge.node_from.value]:
+                lst[edge.node_from.value].append(tupl)
+            else:
+                lst[edge.node_from.value] = [tupl]    
+        return lst
     
     def get_adjacency_matrix(self):
         """Return a matrix, or 2D list.
@@ -91,7 +119,22 @@ class Graph(object):
         column numbers represent to nodes.
         Store the edge values in each spot,
         and a 0 if no edge exists."""
-        return []
+
+        maxi = self.get_number_indices()
+        # create matrix
+        m = [[0 for i in range(0,maxi+1)] for i in range(0,maxi+1)] 
+        # print(f'm = {m}')
+        for edge in self.edges:
+            m[edge.node_from.value][edge.node_to.value] = edge.value
+
+        return m
+
+    def get_number_indices(self):
+        # Determine max indices
+        maxi = 0
+        for node in self.nodes:
+            maxi = max(maxi,node.value)
+        return maxi
 
 graph = Graph()
 graph.insert_edge(100, 1, 2)
@@ -99,8 +142,11 @@ graph.insert_edge(101, 1, 3)
 graph.insert_edge(102, 1, 4)
 graph.insert_edge(103, 3, 4)
 # Should be [(100, 1, 2), (101, 1, 3), (102, 1, 4), (103, 3, 4)]
-print graph.get_edge_list()
+print(graph.get_edge_list())
+
+
 # Should be [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]
-print graph.get_adjacency_list()
-# Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
-print graph.get_adjacency_matrix()
+print(graph.get_adjacency_list())
+# Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], 
+# [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
+print(graph.get_adjacency_matrix())
