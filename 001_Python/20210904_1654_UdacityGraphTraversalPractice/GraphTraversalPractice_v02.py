@@ -19,7 +19,6 @@ class Edge(object):
         self.node_from = node_from
         self.node_to = node_to
 
-
 # You only need to change code with docs strings that have TODO.
 # Specifically: Graph.dfs_helper and Graph.bfs
 # New methods have been added to associate node numbers with names
@@ -141,7 +140,7 @@ class Graph(object):
         for node in self.nodes:
             node.visited = False
 
-    def dfs_helper(self, start_node,children_list):
+    def dfs_helper(self, start_node):
         """TODO: Write the helper function for a recursive implementation
         of Depth First Search iterating through a node's edges. The
         output should be a list of numbers corresponding to the
@@ -152,19 +151,10 @@ class Graph(object):
         """
         ret_list = [start_node.value]
         # Your code here
-        # Mark the node as visited.
         start_node.visited = True
-        # Mark the node in the list of nodes Searched --> already done.
-
-        # Then need to go through all its children first, need to find those children
-        # and then call def_helper on those children
-        # take the adjacent list, extract nodes from adjacent list
-        #print(f'children_list={children_list})')
-        for child in children_list[start_node.value]:
-            #print(f'child[0]={child[0]}, child[1]={child[1]}')
-            if not self._node_map[child[0]].visited:
-                ret_list.extend(self.dfs_helper(self._node_map[child[0]],children_list))
-            
+        for edge in start_node.edges:
+            if edge.node_from.value == start_node.value and not edge.node_to.visited:
+                ret_list.extend(self.dfs_helper(edge.node_to))
         return ret_list
 
     def dfs(self, start_node_num):
@@ -175,8 +165,7 @@ class Graph(object):
         RETURN: a list of the node values (integers)."""
         self._clear_visited()
         start_node = self.find_node(start_node_num)
-        children_list = self.get_adjacency_list()
-        return self.dfs_helper(start_node,children_list)
+        return self.dfs_helper(start_node)
 
     def dfs_names(self, start_node_num):
         """Return the results of dfs with numbers converted to names."""
@@ -244,7 +233,6 @@ pp.pprint(graph.get_adjacency_list_names())
 print("\nAdjacency Matrix")
 pp.pprint(graph.get_adjacency_matrix())
 
-
 print("\nDepth First Search")
 pp.pprint(graph.dfs_names(2))
 
@@ -252,14 +240,13 @@ pp.pprint(graph.dfs_names(2))
 # Depth First Search
 # ['London', 'Shanghai', 'Mountain View', 'San Francisco', 'Berlin', 'Sao Paolo']
 
-
+"""
 print("\nBreadth First Search")
 pp.pprint(graph.bfs_names(2))
 # test error reporting
 # pp.pprint(['Sao Paolo', 'Mountain View', 'San Francisco', 'London', 'Shanghai', 'Berlin'])
-
+"""
 
 # Should print:
 # Breadth First Search
 # ['London', 'Shanghai', 'Berlin', 'Sao Paolo', 'Mountain View', 'San Francisco']
-"""

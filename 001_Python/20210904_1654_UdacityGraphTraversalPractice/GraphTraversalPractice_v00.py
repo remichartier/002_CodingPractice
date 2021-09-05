@@ -1,3 +1,4 @@
+"""
 12. Graph Traversal Practice
 The basic graph traversals show up a lot, particularly in more complicated graph-based algorithms. It's important to make sure you have a mastery before moving on!
 Start out by playing with this DFS and this BFS visualization until the search algorithms feel intuitive to you.
@@ -5,6 +6,7 @@ Next, you'll practice writing code to do these searches in Python. We'll have th
 Start Quiz
 
 Provided :
+"""
 class Node(object):
     def __init__(self, value):
         self.value = value
@@ -16,6 +18,7 @@ class Edge(object):
         self.value = value
         self.node_from = node_from
         self.node_to = node_to
+
 
 # You only need to change code with docs strings that have TODO.
 # Specifically: Graph.dfs_helper and Graph.bfs
