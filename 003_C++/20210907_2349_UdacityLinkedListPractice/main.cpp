@@ -87,6 +87,31 @@ class LinkedList{
 				std::cout << "Impossible to insert at position " << position << std::endl;
 			}
         }
+
+        /* def delete(self, value):
+        """Delete the first node with a given value.""" */
+        void delete_elem(int value){
+        	Element* p = pHead;
+        	Element* previous = NULL;
+        	Element* toDelete;
+        	while((p->value != value) && (p->next != NULL)){
+        		previous = p;
+        		p = p->next;
+        	}
+        	if (p->value == value){
+        		if(previous == NULL){
+        			toDelete = pHead;
+        			pHead = pHead->next;
+        			delete toDelete;
+        		}
+        		else{
+        			toDelete = p;
+        			previous->next = p->next;
+        			delete toDelete;
+        		}
+
+        	}
+        }
 };
 
 
@@ -111,6 +136,15 @@ int main() {
 	// # Test insert
 	list->insert(e4,3);
 	// # Should print 4 now
+	std::cout << "Position 3 : " << list->get_position(3)->value << std::endl;
+
+	//# Test delete
+	list->delete_elem(1);
+	//# Should print 2 now
+	std::cout << "Position 3 : " << list->get_position(1)->value << std::endl;
+	//# Should print 4 now
+	std::cout << "Position 3 : " << list->get_position(2)->value << std::endl;
+	//# Should print 3 now
 	std::cout << "Position 3 : " << list->get_position(3)->value << std::endl;
 
 	return 0;
