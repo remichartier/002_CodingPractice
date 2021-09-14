@@ -28,10 +28,11 @@ class Node{
         }
 
         // Destructor
-        //~Node(){
-        //    delete left;
-        //    delete right;
-        //}
+        ~Node(){
+            // std::cout << "Node Destructor is called" << std::endl;
+            delete left;
+            delete right;
+        }
 };
 
 class BinaryTree{
@@ -44,10 +45,11 @@ class BinaryTree{
         }
 
         // Destructor
-        //~BinaryTree(){
+        ~BinaryTree(){
             // delete will delete recursively ...
-            //delete root;
-        //}
+            // std::cout << "Tree Destructor is called" << std::endl;
+            delete root;
+        }
 
         bool search(int v){
             /* Return True if the value is in the tree, return False otherwise */
@@ -56,6 +58,15 @@ class BinaryTree{
 
         void print_tree(){
             /* Print out all tree nodes as they are visited in a pre-order traversal */
+            std::vector<int> traversal;
+            preorder_print(root, traversal);
+            for(size_t i = 0; i < traversal.size(); i++){
+                if(i == 0) std::cout << "tree = " << traversal[i] ;
+                if ((i != 0) && (i < traversal.size())){
+                    std::cout << "; " << traversal[i];
+                }
+                if(i == traversal.size() -1) std::cout << std::endl;
+            }
         }
 
         bool preorder_search(Node * start, int v){
@@ -75,21 +86,23 @@ class BinaryTree{
             return ret;
         }
 
-        bool preorder_print(Node * start, int v, std::vector<int> & traversal){
+        void preorder_print(Node * start, std::vector<int> & traversal){
             /* Helper method - use this to create a recursive print solution */
-
-            return false;
+            if(start == nullptr) return;
+            traversal.push_back(start->value);
+            if(start->left != nullptr) preorder_print(start->left, traversal);
+            if(start->right != nullptr) preorder_print(start->right, traversal);
         }
 };
 
 
-int main(){
+int main(){ 
     // Set up tree
     BinaryTree tree = BinaryTree(1);
     tree.root->left = new Node(2);
     tree.root->right = new Node(3);
     tree.root->left->left = new Node(4);
-    tree.root->right->left = new Node(5);
+    tree.root->left->right = new Node(5);
 
     // # Test search
     // # Should be True
@@ -97,6 +110,11 @@ int main(){
     // # Should be False
     std::cout << "tree.search(6) should return false (0) : " << tree.search(6) << std::endl;
     //tree.~BinaryTree();
+
+    // # Test print_tree
+    // # Should be 1-2-4-5-3
+    std::cout << "Print should be 1-2-4-5-3 ; ";
+    tree.print_tree();
 
     return 0;
 }
