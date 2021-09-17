@@ -1,5 +1,20 @@
 #include <iostream>
 #include <vector>
+#include<tuple> 
+
+class Edge{
+public:
+    int value;
+    int node_from;
+    int node_to;
+
+    // Constructeur
+    Edge(int v, int from, int to){
+        value = v;
+        node_from = from;
+        node_to = to;
+    }
+};
 
 class Node{
 public:
@@ -12,19 +27,7 @@ public:
     }
 };
 
-class Edge{
-public:
-    int value;
-    Node * node_from;
-    Node * node_to;
 
-    // Constructeur
-    Edge(int v, Node * from, Node * to){
-        value = v;
-        node_from = from;
-        node_to = to;
-    }
-};
 
 class Graph{
 public:
@@ -52,15 +55,62 @@ public:
             to_found = new Node(node_to_val);
             nodes.push_back(to_found);
         }
-        new_edge = new Edge(new_edge_val, from_found, to_found);
+        new_edge = new Edge(new_edge_val, from_found->value, to_found->value);
         from_found->edges.push_back(new_edge);
         to_found->edges.push_back(new_edge);
         edges.push_back(new_edge);
+    }
+
+    std::vector<std::tuple<int, int, int>> get_edge_list(){
+        /* """Don't return a list of edge objects!
+        Return a list of triples that looks like this:
+        (Edge Value, From Node Value, To Node Value)""" */
+        
+        std::vector<std::tuple<int, int, int>> list;
+        for(Edge * e: edges){
+            list.push_back(std::make_tuple(e->value, e->node_from, e->node_to));
+        }
+        return list;
+        }
+
+    void print_edge_list(){
+        std::vector<std::tuple<int, int, int>> list = get_edge_list();
+        std::cout << "Edge List = {" ;
+        for(auto tup:list){
+            std::cout << "(" << std::get<0>(tup) << ", " << std::get<1>(tup) << ", " \
+            << std::get<2>(tup) << "),";
+        }
+        std::cout << "}" << std::endl;
+    }
+
+    void get_adjacency_list(){
+        /*"""Don't return any Node or Edge objects!
+        You'll return a list of lists.
+        The indecies of the outer list represent
+        "from" nodes.
+        Each section in the list will store a list
+        of tuples that looks like this:
+        (To Node, Edge Value)"""
+        return []*/
+
     }
 };
 
 
 int main(){ 
+    Graph graph = Graph();
+    graph.insert_edge(100, 1, 2);
+    graph.insert_edge(101, 1, 3);
+    graph.insert_edge(102, 1, 4);
+    graph.insert_edge(103, 3, 4);
+    std::cout << \
+    "Should be something like [(100, 1, 2), (101, 1, 3), (102, 1, 4), (103, 3, 4)]"\
+     << std::endl;
+    //print graph.get_edge_list()
+    graph.print_edge_list();
+    // print graph.get_adjacency_list()
+    // # Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
+
 
     return 0;
 }
