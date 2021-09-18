@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
-#include<tuple> 
+#include <tuple>
+#include <map>
 
 class Edge{
 public:
@@ -83,7 +84,7 @@ public:
         std::cout << "}" << std::endl;
     }
 
-    void get_adjacency_list(){
+    std::map<int,std::vector<std::tuple<int, int>>> get_adjacency_list(){
         /*"""Don't return any Node or Edge objects!
         You'll return a list of lists.
         The indecies of the outer list represent
@@ -92,7 +93,38 @@ public:
         of tuples that looks like this:
         (To Node, Edge Value)"""
         return []*/
+        std::map<int,std::vector<std::tuple<int, int>>> list;
+        for(Edge * e: edges){
+            if(list[e->node_from].empty()){
+                list.insert({e->node_from,{std::make_tuple(e->node_to,e->value)}});    
+            }
+            else{
+                list[e->node_from].push_back(std::make_tuple(e->node_to,e->value));
+            }
+        }
+        return list;
+    }
 
+    void print_adjacency_list(){
+        std::map<int,std::vector<std::tuple<int, int>>>  list = get_adjacency_list();
+        std::cout << "Adjency Edge List = [" ;
+
+
+
+
+        // here need to take a iterator for a map .....
+        //map<int, int>::iterator itr;
+        //for (itr = gquiz1.begin(); itr != gquiz1.end(); ++itr) {
+        WILL FINISH TOMORROW
+
+        for(auto l:list){
+            std::cout << "[";
+            for(auto tup:l){
+                std::cout << "(" << std::get<0>(tup) << ", " << std::get<1>(tup) << "),";
+            }
+            std::cout << "],";
+        }
+        std::cout << "]" << std::endl;
     }
 };
 
@@ -108,8 +140,12 @@ int main(){
      << std::endl;
     //print graph.get_edge_list()
     graph.print_edge_list();
+    // # Should be [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]
     // print graph.get_adjacency_list()
-    // # Should be [[0, 0, 0, 0, 0], [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], [0, 0, 0, 0, 103], [0, 0, 0, 0, 0]]
+    std::cout << \
+    "Should be something like [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]"\
+     << std::endl;
+     graph.print_adjacency_list();
 
 
     return 0;
