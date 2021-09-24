@@ -109,15 +109,29 @@ public:
         std::map<int,std::vector<std::tuple<int, int>>>  list = get_adjacency_list();
         std::cout << "Adjency Edge List = [" ;
 
-
-
-
         // here need to take a iterator for a map .....
         //map<int, int>::iterator itr;
         //for (itr = gquiz1.begin(); itr != gquiz1.end(); ++itr) {
-        WILL FINISH TOMORROW
+        //std::map<int,std::vector<std::tuple<int, int>>>::iterator itr;
+        std::cout << "[";     
+        //for (itr = list.begin(); itr != list.end(); ++itr) {
+        for(std::map<int,std::vector<std::tuple<int, int>>> itr:list){
+            std::cout << "[";     
+            //std::vector<std::tuple<int, int>>::iterator v;
+            for(std::tuple<int, int> v:itr){
+            //for (v = itr.begin(); v != itr.end(); ++v) {
+                for(auto tup:v){
+                    std::cout << "(" << std::get<0>(tup) << ", " << std::get<1>(tup) << "),";
+                }    
+            }
+            std::cout << "],";
+        }
+        std::cout << "]" << std::endl;
 
-        for(auto l:list){
+        // WILL FINISH TOMORROW
+        // Conclusion : need to find out how to iterate through a map first
+
+        /*for(auto l:list){
             std::cout << "[";
             for(auto tup:l){
                 std::cout << "(" << std::get<0>(tup) << ", " << std::get<1>(tup) << "),";
@@ -125,6 +139,7 @@ public:
             std::cout << "],";
         }
         std::cout << "]" << std::endl;
+        */
     }
 };
 
