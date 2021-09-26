@@ -33,11 +33,21 @@ public:
 class Graph{
 public:
     std::vector<Node *> nodes;
-    std::vector<Edge *> edges;    
+    std::vector<Edge *> edges;
+    // for adjacency Matrix build
+    int max_node;
+
+    // Constructor
+    Graph(){
+        // for adjacency Matrix build
+        max_node = 0;
+    }
 
     void insert_node(int v){
         Node * new_node = new Node(v);
         nodes.push_back(new_node);
+        // for adjacency Matrix build
+        max_node = std::max(max_node,v);
     }
 
     void insert_edge(int new_edge_val, int node_from_val, int node_to_val){
@@ -60,6 +70,10 @@ public:
         from_found->edges.push_back(new_edge);
         to_found->edges.push_back(new_edge);
         edges.push_back(new_edge);
+
+        // for adjacency Matrix build
+        max_node = std::max(max_node,node_from_val);
+        max_node = std::max(max_node,node_to_val);   
     }
 
     std::vector<std::tuple<int, int, int>> get_edge_list(){
@@ -123,6 +137,33 @@ public:
         }
         std::cout << "]" << std::endl;
     }
+
+    std::vector<std::vector<int>> get_adjacency_matrix(){
+        /*"""Return a matrix, or 2D list.
+        Row numbers represent from nodes,
+        column numbers represent to nodes.
+        Store the edge values in each spot,
+        and a 0 if no edge exists."""*/
+        std::vector<std::vector<int>> M(max_node +1,std::vector<int>(max_node + 1, 0));
+
+        // scroll Edges to find number max of node indices
+        for(Edge * e: edges){
+            M[e->node_from][e->node_to] = e->value;
+        }
+        return M;
+    }
+
+    void print_adjacency_matrix(std::vector<std::vector<int>> M){
+        std::cout << "Adjacency Matrix = [";
+        for(auto row:M){
+            std::cout << "[";
+            for(auto col:row){
+                std::cout << col << ",";
+            }
+            std::cout << "],";
+        }
+        std::cout << "]" << std::endl; 
+    }
 };
 
 
@@ -140,11 +181,16 @@ int main(){
     // # Should be [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]
     // print graph.get_adjacency_list()
     std::cout << \
-    "Should be something like [None, [(2, 100), (3, 101), (4, 102)], None, [(4, 103)], None]"\
+    "Adjacency List : Should be something like [None, [(2, 100), (3, 101),\
+     (4, 102)], None, [(4, 103)], None]"\
      << std::endl;
      graph.print_adjacency_list();
-
-
+    std::cout << \
+    "Adjacency Matrix : Should be something like : [[0, 0, 0, 0, 0],\
+     [0, 0, 100, 101, 102], [0, 0, 0, 0, 0], [0, 0, 0, 0, 103],\
+      [0, 0, 0, 0, 0]]" << std::endl;
+    // print graph.get_adjacency_matrix()
+    graph.print_adjacency_matrix(graph.get_adjacency_matrix());
     return 0;
 }
 
