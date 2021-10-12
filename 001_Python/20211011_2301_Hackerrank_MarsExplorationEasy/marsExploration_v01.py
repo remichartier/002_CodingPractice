@@ -15,6 +15,12 @@ import sys
 
 def marsExploration(s):
     # Write your code here
+    count = 0
+    pattern = "SOS"
+    for i in range(len(s)):
+        if s[i] != pattern[i % 3]:
+            count += 1
+    return count
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
