@@ -1,0 +1,5 @@
+The sentence "Now if we permute the array as [1, 4, 5, 3, 2], the result is a zig zag sequence."
+
+is wrong, it should be : [1, 2, 5, 4, 3]
+
+Having the problem description wrong by itself is very confusing.
