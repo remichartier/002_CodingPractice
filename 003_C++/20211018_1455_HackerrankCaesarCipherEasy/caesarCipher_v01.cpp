@@ -18,7 +18,7 @@ string caesarCipher(string s, int k) {
     int n, n_new, a_value;
     string output;
     for(size_t i=0; i < s.size(); ++i){
-        if(s[i] != '-'){
+        if(isalpha(int(s[i]))){
             if(islower(int(s[i]))){
                 a_value = int('a');  
             }
