@@ -13,12 +13,13 @@ string rtrim(const string &);
  */
 
 string gridChallenge(vector<string> grid) {
-    string s1,s2;
+     string s1,s2;
     int nb_col = grid[0].size();
     int nb_row = grid.size();
+    cout << "nb_row = " << nb_row << ", nb_col = " << nb_col << endl;
     
-    for(auto s: grid){
-        cout << "String to sort : " << s << endl;
+    for(auto& s: grid){
+        //cout << "String to sort : " << s << endl;
         sort(s.begin(),s.end());        
         cout << "String sorted : " << s << endl;
     }
@@ -40,8 +41,8 @@ string gridChallenge(vector<string> grid) {
             cout << "Column " << i << " : " << s1 << " SORTED" << endl;
         }
     }
+    cout << "return YES" << endl;
     return "YES";
-
 }
 
 int main()
