@@ -16,6 +16,7 @@ import sys
 #
 
 def is_palindrome(s):
+    s = s.lower()
     start = 0;
     while start <= len(s) -1 -start:
         if s[start] != s[len(s) -1 -start]:
@@ -54,11 +55,15 @@ def palindromeIndex(s):
     
 print(f'palindromeIndex bcbc : {palindromeIndex("bcbc")}')
 print(f'palindromeIndex aaab : {palindromeIndex("aaab")}')
-print(f'palindromeIndex baa : {palindromeIndex("baa")}')
+print(f'palindromeIndex bAa : {palindromeIndex("bAa")}')
 print(f'palindromeIndex aaa : {palindromeIndex("aaa")}')
 print(f'palindromeIndex b : {palindromeIndex("b")}')
-print(f'palindromeIndex bb : {palindromeIndex("bb")}')
+print(f'palindromeIndex bB : {palindromeIndex("bB")}')
 print(f'palindromeIndex ab : {palindromeIndex("ab")}')
+print(f'palindromeIndex madaam : {palindromeIndex("madaam")}')
+print(f'palindromeIndex maadam : {palindromeIndex("maadam")}')
+print(f'palindromeIndex empty string : {palindromeIndex("")}')
+
 
 
 
