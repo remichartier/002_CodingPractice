@@ -50,8 +50,24 @@ class Node {
 
 */
 
+    void helper(Node *node, string& s){
+        if(node == NULL) return;
+        if(s.size() == 0){
+            s += to_string(node->data);  
+            // cout << s << endl;    
+        }
+        else{
+            s += " " + to_string(node->data);
+            // cout << s << endl;    
+        }
+        if(node->left != NULL) helper(node->left, s);
+        if(node->right != NULL) helper(node->right, s);
+    }
+    
     void preOrder(Node *root) {
-
+        string s("");
+        helper(root, s);
+        cout << s << endl;    
     }
 
 }; //End of Solution
