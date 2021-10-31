@@ -6,6 +6,8 @@ import random
 import re
 import sys
 
+
+
 #
 # Complete the 'bfs' function below.
 #
@@ -21,33 +23,60 @@ class Node:
     def __init__(self, value):
         self.value = value
         self.edges = []
+        self.seen = False
+        self.dist = 0
 
     def add_edge(self, number):
         self.edges.append(number)
+    
+    def reset_seen_dist(self):
+        self.seen = False
+        self.dist = 0
+
+    def set_seen(self):
+        self.seen = True
+
+    def set_dist(self,a):
+        self.dist = a
         
 class Graph:
     def __init__(self):
         self.nodes = [Node(0)]
+
+    def reset_seen_dist(self):
+        for n in self.nodes:
+            n.reset_seen_dist()
+            
 
 # start = start node number (1 to n)
 # target = searched node number (1 to n)
 def find_bfs(start, target, g):
     curr = g.nodes[start]
     links = []
+    dist = 0
     if target == curr.value:
         return 0
+    curr.set_seen()
     #print(f'node {start} current edges {curr.edges}')
     for e in curr.edges:
-        if g.nodes[e].value != start:
-            # dist += find_bfs(g.nodes[e].value, target, g)
-            # stack the neighbors
-            links.append(g.nodes[e].value)
-    for l in links:
-        print(f"find_bfs({l}, {target}, g)")
-        d = find_bfs(l, target, g)
-        print(f"{d} = find_bfs({l}, {target}, g)")
-        if d != -1:
-            return 6 + d
+        if not g.nodes[e].seen: 
+            g.nodes[e].set_seen()
+            g.nodes[e].dist = g.nodes[e].dist + 6
+            #print(f"1st loop : g.nodes[{e}].dist = {g.nodes[e].dist}")
+
+        links.append(e)
+
+    while len(links) != 0:
+        node_number = links.pop(0)
+        if target == node_number:
+            return g.nodes[node_number].dist
+        curr = g.nodes[node_number]
+        for e in curr.edges:
+            if not g.nodes[e].seen: 
+                g.nodes[e].set_seen()
+                g.nodes[e].dist = g.nodes[node_number].dist + 6
+                #print(f" 2nd loops : g.nodes[{e}].dist = {g.nodes[e].dist}")
+                links.append(e)
     return -1
 
 
@@ -69,21 +98,28 @@ def bfs(n, m, edges, s):
     output = []
     for i in range(1, n+1):
         if i != s:
+            g.reset_seen_dist()
+            #print(f"find_bfs({s}, {i}, g)")
             output.append(find_bfs(s, i, g))
-    print(output)
+    #print(output)
+    return output
     
     #print(f"Display graph nodes : {g.nodes}")
-    '''
+    
     for no in g.nodes:
         print(f"value : {no.value}, edges : {no.edges}")
     print("bfs searches : ")
+    g.reset_seen_dist()
     print(find_bfs(1, 2, g))
+    g.reset_seen_dist()
     print(find_bfs(1, 3, g))
+    g.reset_seen_dist()
     print(find_bfs(1, 4, g))
+    g.reset_seen_dist()
     print(find_bfs(1, 5, g))
-    '''
     
-bfs(5,3,[[1,2],[1,3],[3,4]],1)
+    
+print(bfs(5,3,[[1,2],[1,3],[3,4]],1))
 
 '''
 if __name__ == '__main__':
