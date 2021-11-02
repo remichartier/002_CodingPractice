@@ -96,7 +96,8 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
 
     // now, can implement BFS
 
-    for(size_t i = 2; i <= 5; ++i){
+    for(int i = 1; i <= 5; ++i){
+        if(i == s) continue;
         cout << "Loop FOR" << endl;
         // reset nodes seen and dist attributes
         g.reset_seen_dist_attributes();
@@ -109,14 +110,23 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
         // otherwise store all the edges in a queue
         // and set them as seen .... + increment dist
         vector<Node*> queue;
-        for(auto& e: curr->edges){
+        for(size_t j=0; j < curr->edges.size();++j){
+            curr->edges[j]->seen = true;
+            curr->edges[j]->dist = curr->dist + 6;
+            queue.push_back(curr->edges[j]);
+        }
+        cout << "First add to queue ";
+        g.print_nodes_dist();
+                                                        cout << "HERE" << endl;
+
+        /*for(auto& e: curr->edges){
             e->seen = true;
             cout << "e->value = " << e->value << ", " << "e->dist before increment = " << e->dist << endl;
             e->dist = e->dist + 6;
             cout << "e->dist = " << e->dist << endl;
             g.print_nodes_dist();
             queue.push_back(e);
-        }
+        }*/
         //queue
         // Now, while queue not empty : 
         //   now dequeue each one, check if target.
@@ -136,7 +146,20 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
                 break;
             }
             //   if not target, queue edges if not seen yet 
-            for(auto& e: curr->edges){
+
+            for(size_t j=0; j < curr->edges.size();++j){
+                
+                if(!curr->edges[j]->seen){
+
+                    curr->edges[j]->seen = true;
+                    curr->edges[j]->dist = curr->dist + 6;
+                    queue.push_back(curr->edges[j]);
+                }
+
+            }
+            cout << "Second add to queue ";
+            g.print_nodes_dist();
+            /*for(auto& e: curr->edges){
                 if(!e->seen){
                     e->seen = true;
                     cout << "e->value = " << e->value << ", " << "e->dist before increment = " << e->dist << endl;
@@ -145,7 +168,7 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
                     g.print_nodes_dist();
                     queue.push_back(e);
                 }
-            }
+            }*/
         }
         // if reached here, did not find target --> push back -1.
         if(found == false) 

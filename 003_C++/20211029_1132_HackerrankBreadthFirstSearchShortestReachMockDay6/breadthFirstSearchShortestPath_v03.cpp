@@ -96,8 +96,8 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
 
     // now, can implement BFS
 
-    for(size_t i = 2; i <= 5; ++i){
-        cout << "Loop FOR" << endl;
+    for(int i = 1; i <= n; ++i){
+        if(i == s) continue;
         // reset nodes seen and dist attributes
         g.reset_seen_dist_attributes();
         // will start from node # s --> s-1 in indexes.
@@ -111,10 +111,7 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
         vector<Node*> queue;
         for(auto& e: curr->edges){
             e->seen = true;
-            cout << "e->value = " << e->value << ", " << "e->dist before increment = " << e->dist << endl;
-            e->dist = e->dist + 6;
-            cout << "e->dist = " << e->dist << endl;
-            g.print_nodes_dist();
+            e->dist = curr->dist + 6;
             queue.push_back(e);
         }
         //queue
@@ -139,10 +136,7 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
             for(auto& e: curr->edges){
                 if(!e->seen){
                     e->seen = true;
-                    cout << "e->value = " << e->value << ", " << "e->dist before increment = " << e->dist << endl;
-                    e->dist = e->dist + 6;
-                    cout << "e->dist = " << e->dist << endl;
-                    g.print_nodes_dist();
+                    e->dist = curr->dist + 6;
                     queue.push_back(e);
                 }
             }
@@ -153,6 +147,25 @@ vector<int> bfs(int n, int m, vector<vector<int>> edges, int s) {
     }  // end for
     return output;
 }
+
+/*
+Input (stdin)
+2
+4 2
+1 2
+1 3
+1
+3 1
+2 3
+2
+Your Output (stdout)
+6 6 -1 -1
+-1 6 -1 -1
+Expected Output
+6 6 -1
+-1 6
+
+*/
 
 int main(){
     vector<int> results;
