@@ -20,7 +20,7 @@ def sockMerchant(n, ar):
     count = 0
     ar.sort()
     i = 0
-    while i < len(ar) -2:
+    while i +1 < len(ar):
         if ar[i] == ar[i+1]:
             count +=1
             i += 2
