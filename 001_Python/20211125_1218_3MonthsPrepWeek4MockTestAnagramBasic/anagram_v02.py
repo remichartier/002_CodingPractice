@@ -17,18 +17,23 @@ import sys
 
 def anagram(s):
     # Write your code here
+    count = 0
     if len(s) % 2 != 0:
         return -1
     half = int(len(s)/2)
     # split string into 2 lists of equal length
-    l1 = list(s[0:half])
-    l2 = list(s[half:])
-    l1.sort()
-    l2.sort()
-    count = 0
-    for i in range(len(l1)):
-        if l1[i] != l2[i]:
-            count += 1
+    s1 = list(s[0:half])
+    s2 = list(s[half:])
+    count_s1 = {}
+    for c in s1:
+        if count_s1.get(c) == None:
+            count_s1[c] = 1
+        else:
+            count_s1[c] += 1
+    for c in count_s1.keys():
+        if count_s1[c] > s2.count(c):
+            count += count_s1[c] - s2.count(c);
+
     return count
 
 if __name__ == '__main__':
