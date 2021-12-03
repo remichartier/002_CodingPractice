@@ -15,7 +15,6 @@ import sys
 
 def formingMagicSquare(s):
     # Write your code here
-        # https://mindyourdecisions.com/blog/2015/11/08/how-many-3x3-magic-squares-are-there-sunday-puzzle/
     # https://mindyourdecisions.com/blog/2015/11/08/how-many-3x3-magic-squares-are-there-sunday-puzzle/
     # record all the 8 possible squares : 
     M = [   [ [8,1,6],[3,5,7],[4,9,2] ],
