@@ -22,7 +22,20 @@ import sys
         Time limit exceeded
         Your code did not execute within the time limits. Please optimize your code. For more information on execution time limits, refer to the environment page
 '''
-
+'''
+SUGGESTION FOR OPTIMIZING : 
+- INSTEAD OF ALT_GRID
+  - USE GRID, MARK INITIAL BOMBS AS B (STRING REPLACE 'O' BY 'B')
+  - NOTE THEIR POSITIONS
+  - REPLACE BLAST POSITIONS I+-1,J AND I,J+-1 BY 'D'
+  - WHEN BOMBERMAN PLANT BOMBS IN ALL CELLS WITHOUT BOMBS, JUST STRING REPLACE '.' BY '0'
+  - EVERY T+3 SECONDS, STRING REPLACE 'D' AND 'B' BY '.'
+    - AND STRING REPLACE 'O' BY 'B' +
+        - NOTE THEIR POSITIONS
+        - REPLACE BLAST POSITIONS I+-1,J AND I,J+-1 BY 'D'
+        
+==> THIS PROVIDES OPTIMIZATION BY NOT LOOPING ON EACH LINE AND EACH COLUMN, AND BY JUST USING STRING OPERATIONS AS MUCH AS POSSIBLE...
+'''
 
 def Bomberman_plants_bombs_in_all_cells_without_bombs(t, alt_grid):
     for line in range(len(alt_grid)):
